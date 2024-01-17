@@ -1,4 +1,4 @@
-console.log('Hello World');
+
 
 
 function getComputerChoice(){
@@ -44,29 +44,7 @@ function playRound(playerSelection, computerSelection){
     }
 }
 
-function game(){
-    let playerScore = 0;
-    let computerScore = 0;
-    let draw = 0;
-    console.log('Welcome to Rock, Paper, Scissors! Let us play 5 games!');
-    for(i = 0; i<5; i++){
-        console.log('Round ' + (i+1));
-        let playerSelection = prompt('Enter your choice: ');
-        while(playerSelection.toLowerCase() != 'rock' && playerSelection.toLowerCase() != 'paper' && playerSelection.toLowerCase() != 'scissors'){
-            playerSelection = prompt('Enter your choice: ');
-        }
-        let result= playRound(playerSelection, getComputerChoice());
-        if(result.includes('win')){
-            playerScore++;
-        }
-        else if(result.includes('lose')){
-            computerScore++;
-        }
-        else{
-            draw++;
-        }
-        console.log('-- Your score: ' + playerScore + ' Computer score: ' + computerScore + ' Draw: ' + draw + ' --')
-    }
+function endGame(playerScore, computerScore){
     if(playerScore > computerScore){
         console.log('You win!');
     }
@@ -77,4 +55,73 @@ function game(){
         console.log('Tie!');
     }
 }
+
+function game() {
+    let playerScore = 0;
+    let computerScore = 0;
+    let draw = 0;
+    let i = 0;
+
+    const rock = document.createElement("button");
+    rock.textContent = 'rock';
+    document.body.appendChild(rock);
+
+    const scissors = document.createElement("button");
+    scissors.textContent = 'scissors';
+    document.body.appendChild(scissors);
+
+    const paper = document.createElement("button");
+    paper.textContent = 'paper'; 
+    document.body.appendChild(paper);
+
+    rock.addEventListener('click', () => handleButtonClick('rock'));
+    scissors.addEventListener('click', () => handleButtonClick('scissors'));
+    paper.addEventListener('click', () => handleButtonClick('paper'));
+
+    console.log('Welcome to Rock, Paper, Scissors! Let us play 5 games!');
+    const leaderboard = document.createElement('table');
+    const headerRow = leaderboard.createTHead().insertRow(0);
+    const headers = ['Game No', 'Player Score', 'Computer Score', 'Tie'];
+    headers.forEach((headerText, index) => {
+        const th = document.createElement('th');
+        th.textContent = headerText;
+        headerRow.appendChild(th);
+    });
+    document.body.appendChild(leaderboard);
+    
+
+    function handleButtonClick(playerSelection) {
+        console.log('Round ' + (i + 1));
+
+        let computerSelection = getComputerChoice();
+        let result = playRound(playerSelection, computerSelection);
+
+        if (result.includes('win')) {
+            playerScore++;
+        } else if (result.includes('lose')) {
+            computerScore++;
+        } else {
+            draw++;
+        }
+        const row = leaderboard.insertRow(1);
+        const gameNo = row.insertCell(0);
+        const pScore = row.insertCell(1);
+        const cScore = row.insertCell(2);
+        const tie = row.insertCell(3);
+        gameNo.textContent = i;
+        pScore.textContent = playerScore;
+        cScore.textContent = computerScore;
+        tie.textContent = draw;
+
+        console.log('-- Your score: ' + playerScore + ' Computer score: ' + computerScore + ' Draw: ' + draw + ' --');
+        i++;
+        
+        if (playerScore === 5 || computerScore === 5) {
+            endGame(playerScore, computerScore);
+        }
+    }
+}
+
+
+
 game();
