@@ -42,25 +42,6 @@ function playRound(playerSelection, computerSelection){
     }
 }
 
-// function endGame(playerScore, computerScore){
-//     if(playerScore > computerScore){
-//         console.log('You win!');
-//         const endResult = document.createElement("div");
-//         endResult.textContent = "you win!";
-//     }
-//     else if(playerScore < computerScore){
-//         console.log('You lose!');
-//         const endResult = document.createElement("div");
-//         endResult.textContent = "you lose!";
-//     }
-//     else{
-//         console.log('Tie!');
-//         const endResult = document.createElement("div");
-//         endResult.textContent = "you tie!";
-//     }
-//     document.body.appendChild(endResult);
-// }
-
 let playerScore = 0;
 let computerScore = 0;
 let draw = 0;
